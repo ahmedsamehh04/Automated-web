@@ -1,0 +1,28 @@
+---
+- name: Install Docker on the VM
+  hosts: localhost
+  connection: local
+  become: yes
+ 
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+ 
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+  
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Add user to docker group
+      user:
+       name: ahmed
+       groups: docker
+       append: yes
+
